@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Processware | 표준 프로세스 구독 플랫폼</title>
+  <meta name="description" content="표준, 직무, 산업별 프로세스팩을 구독하고 바로 운영하는 AI 기반 표준 프로세스 플랫폼">
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9e1ef;
+      --soft: #f6f9ff;
+      --mint: #14b8a6;
+      --blue: #2563eb;
+      --coral: #f97360;
+      --yellow: #f8c24e;
+      --green: #22c55e;
+      --shadow: 0 24px 70px rgba(37, 99, 235, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .page { overflow: hidden; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px clamp(20px, 5vw, 72px);
+      border-bottom: 1px solid rgba(217, 225, 239, 0.7);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(18px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--mint));
+      font-weight: 900;
+    }
+    .nav-links { display: flex; align-items: center; gap: 22px; color: #475467; font-size: 14px; }
+    .nav-cta, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .nav-cta, .btn.primary {
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.22);
+    }
+    .btn.secondary { color: var(--ink); background: #fff; border-color: var(--line); }
+    .hero {
+      min-height: 86vh;
+      display: grid;
+      align-items: center;
+      padding: 58px clamp(20px, 5vw, 72px) 34px;
+      background:
+        radial-gradient(circle at 12% 15%, rgba(20, 184, 166, 0.16), transparent 32%),
+        radial-gradient(circle at 82% 20%, rgba(249, 115, 96, 0.14), transparent 30%),
+        linear-gradient(180deg, #f7fbff 0%, #ffffff 74%);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
+      align-items: center;
+      gap: clamp(32px, 5vw, 72px);
+      max-width: 1180px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border: 1px solid rgba(37, 99, 235, 0.18);
+      border-radius: 999px;
+      background: #fff;
+      color: #175cd3;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+    h1 {
+      margin: 20px 0 18px;
+      font-size: clamp(44px, 6vw, 78px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+    .lead {
+      max-width: 650px;
+      margin: 0 0 28px;
+      color: #475467;
+      font-size: clamp(18px, 2vw, 22px);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+    .mini-proof {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 640px;
+    }
+    .proof-item {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+    .proof-item strong { display: block; font-size: 22px; }
+    .proof-item span { color: var(--muted); font-size: 13px; }
+    .hero-panel {
+      padding: 22px;
+      border: 1px solid rgba(217, 225, 239, 0.85);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .workflow { display: grid; gap: 12px; }
+    .flow-row {
+      display: grid;
+      grid-template-columns: 78px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid #e8edf7;
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+    .flow-row b { color: var(--blue); }
+    .pill {
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #eafaf6;
+      color: #047857;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .section { padding: 86px clamp(20px, 5vw, 72px); }
+    .section.soft { background: var(--soft); }
+    .section-head { max-width: 760px; margin: 0 auto 36px; text-align: center; }
+    .section-head h2 {
+      margin: 0 0 12px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+    .section-head p { margin: 0; color: var(--muted); font-size: 18px; }
+    .grid { display: grid; gap: 18px; max-width: 1180px; margin: 0 auto; }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 22px;
+      box-shadow: 0 10px 32px rgba(23, 32, 51, 0.05);
+    }
+    .icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+    .icon.blue { background: var(--blue); }
+    .icon.mint { background: var(--mint); }
+    .icon.coral { background: var(--coral); }
+    .icon.yellow { background: var(--yellow); color: #5b3b00; }
+    .card h3 { margin: 0 0 8px; font-size: 20px; }
+    .card p { margin: 0 0 16px; color: var(--muted); }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: #eef4ff;
+      color: #1849a9;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .band {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 30px;
+      align-items: center;
+    }
+    .steps { display: grid; gap: 14px; }
+    .step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .step-num {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: #eafaf6;
+      color: #047857;
+      font-weight: 900;
+    }
+    .step h3 { margin: 0 0 4px; }
+    .step p { margin: 0; color: var(--muted); }
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .price-card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .price-card.highlight {
+      border-color: rgba(37, 99, 235, 0.35);
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+    }
+    .price-label {
+      display: inline-flex;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #fff6e6;
+      color: #8a4b00;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .price-card h3 { margin: 0 0 8px; font-size: 28px; }
+    .price-card p { color: var(--muted); }
+    .price-card ul { padding: 0; margin: 20px 0 24px; list-style: none; }
+    .price-card li { margin: 10px 0; padding-left: 24px; position: relative; }
+    .price-card li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 900;
+    }
+    .quote {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 34px;
+      border-radius: 8px;
+      background: #172033;
+      color: #fff;
+    }
+    .quote p { margin: 0 0 16px; font-size: clamp(22px, 3vw, 34px); line-height: 1.25; }
+    .quote span { color: #b8c2d6; }
+    .faq { max-width: 900px; margin: 0 auto; display: grid; gap: 12px; }
+    details {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px 20px;
+    }
+    summary { cursor: pointer; font-weight: 800; }
+    details p { margin: 12px 0 0; color: var(--muted); }
+    .cta {
+      padding: 80px clamp(20px, 5vw, 72px);
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.94), rgba(20, 184, 166, 0.9));
+      color: #fff;
+      text-align: center;
+    }
+    .cta h2 {
+      margin: 0 auto 14px;
+      max-width: 820px;
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.12;
+    }
+    .cta p { margin: 0 auto 24px; max-width: 720px; color: rgba(255,255,255,0.86); font-size: 18px; }
+    .cta .btn.secondary { border-color: rgba(255,255,255,0.6); }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 28px clamp(20px, 5vw, 72px);
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    @media (max-width: 980px) {
+      .hero-grid, .band, .pricing { grid-template-columns: 1fr; }
+      .grid.three, .grid.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .hero { min-height: auto; padding-top: 42px; }
+      .mini-proof, .grid.three, .grid.four { grid-template-columns: 1fr; }
+      .flow-row { grid-template-columns: 1fr; }
+      .section { padding-top: 64px; padding-bottom: 64px; }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="nav">
+      <a class="brand" href="#top" aria-label="Processware home">
+        <span class="brand-mark">P</span>
+        <span>Processware</span>
+      </a>
+      <nav class="nav-links" aria-label="주요 메뉴">
+        <a href="#packs">프로세스팩</a>
+        <a href="#domains">산업 도메인</a>
+        <a href="#pricing">비용</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="nav-cta" href="#pricing">도입 방식 보기</a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow"><span class="dot"></span> AI 표준 프로세스 구독 플랫폼</span>
+            <h1>표준 문서를 바로 쓰는 프로세스로 바꿉니다.</h1>
+            <p class="lead">
+              ISO, ASPICE, 의료기기, 방산 표준부터 프로젝트관리와 품질관리 같은 공통 직무까지.
+              필요한 프로세스팩을 구독하고, 실행 기록과 심사 증적까지 자연스럽게 쌓아보세요.
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#packs">프로세스팩 둘러보기</a>
+              <a class="btn secondary" href="#how">작동 방식 보기</a>
+            </div>
+            <div class="mini-proof" aria-label="서비스 요약">
+              <div class="proof-item"><strong>4단계</strong><span>Plan, Do, Check, Act 운영 루프</span></div>
+              <div class="proof-item"><strong>8종</strong><span>정책, 절차, 지침, 템플릿, 기록</span></div>
+              <div class="proof-item"><strong>3가지</strong><span>일반, 산업, 직무 프로세스팩</span></div>
+            </div>
+          </div>
+
+          <div class="hero-panel" aria-label="Processware workflow preview">
+            <div class="workflow">
+              <div class="flow-row"><b>Plan</b><span>표준과 사내 규정을 분석해 프로세스 자산 생성</span><span class="pill">POL/PRO/WI</span></div>
+              <div class="flow-row"><b>Do</b><span>업무지침을 따라 실행하고 승인과 기록 자동화</span><span class="pill">REC</span></div>
+              <div class="flow-row"><b>Check</b><span>증적, KPI, 부적합, GAP을 한 번에 점검</span><span class="pill">NCR/KPI</span></div>
+              <div class="flow-row"><b>Act</b><span>원인분석과 개정 큐로 프로세스 개선 연결</span><span class="pill">Revision</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="packs">
+        <div class="section-head">
+          <h2>필요한 만큼 구독하는 표준 프로세스팩</h2>
+          <p>문서만 주고 끝나는 자료실이 아니라, 실행과 기록까지 이어지는 운영 패키지입니다.</p>
+        </div>
+        <div class="grid three">
+          <article class="card">
+            <div class="icon blue">G</div>
+            <h3>General Suite</h3>
+            <p>일반 조직의 품질, 보안, 개발 성숙도 체계를 빠르게 잡습니다.</p>
+            <div class="tag-list"><span class="tag">ISO 9001</span><span class="tag">ISO/IEC 27001</span><span class="tag">CMMI-DEV</span></div>
+          </article>
+          <article class="card">
+            <div class="icon mint">F</div>
+            <h3>Function Packs</h3>
+            <p>PMO, QA, 보안, 형상관리처럼 조직 공통 직무별 프로세스를 제공합니다.</p>
+            <div class="tag-list"><span class="tag">프로젝트관리</span><span class="tag">품질관리</span><span class="tag">형상관리</span><span class="tag">보안관리</span></div>
+          </article>
+          <article class="card">
+            <div class="icon coral">I</div>
+            <h3>Industry Suites</h3>
+            <p>자동차, 의료기기, 국방처럼 규제와 증적이 중요한 산업에 맞춥니다.</p>
+            <div class="tag-list"><span class="tag">Automotive</span><span class="tag">Medical Device</span><span class="tag">Defense</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section soft" id="domains">
+        <div class="section-head">
+          <h2>산업별로 준비된 전문 프로세스</h2>
+          <p>복잡한 표준 이름은 뒤로 숨기고, 팀이 바로 이해하고 운영할 수 있는 흐름으로 제공합니다.</p>
+        </div>
+        <div class="grid three">
+          <article class="card">
+            <div class="icon blue">A</div>
+            <h3>Automotive Suite</h3>
+            <p>차량 SW 개발, 기능안전, 사이버보안을 하나의 추적성 체계로 연결합니다.</p>
+            <div class="tag-list"><span class="tag">ASPICE 4.0</span><span class="tag">ISO 26262</span><span class="tag">ISO/SAE 21434</span></div>
+          </article>
+          <article class="card">
+            <div class="icon mint">M</div>
+            <h3>Medical Device Suite</h3>
+            <p>의료기기 QMS, 의료 SW 생명주기, 헬스 소프트웨어 보안을 묶습니다.</p>
+            <div class="tag-list"><span class="tag">ISO 13485</span><span class="tag">IEC 62304</span><span class="tag">IEC 81001-5-1</span></div>
+          </article>
+          <article class="card">
+            <div class="icon yellow">D</div>
+            <h3>Defense Suite</h3>
+            <p>방산 품질, 시스템 엔지니어링, 안전, 국방 사이버보안 증적을 정리합니다.</p>
+            <div class="tag-list"><span class="tag">DQMS</span><span class="tag">AQAP 2110</span><span class="tag">AS9100D</span><span class="tag">MIL-STD-882E</span><span class="tag">CMMC/NIST</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>조직 공통 직무도 가볍게 시작하세요</h2>
+          <p>인증 프로젝트가 아니어도 쓸 수 있는 직무별 운영 체계를 제공합니다.</p>
+        </div>
+        <div class="grid four">
+          <article class="card"><h3>프로젝트관리</h3><p>착수, 일정, 이슈, 리스크, 변경, 보고, 종료까지 PMO 기본 흐름을 정리합니다.</p></article>
+          <article class="card"><h3>품질관리</h3><p>품질계획, 리뷰, 내부감사, 부적합, CAPA, 품질지표를 연결합니다.</p></article>
+          <article class="card"><h3>형상관리</h3><p>기준선, 버전, 변경통제, 릴리즈, 산출물 목록을 안정적으로 운영합니다.</p></article>
+          <article class="card"><h3>일반 보안관리</h3><p>계정, 접근통제, 자산, 취약점, 사고대응, 정기점검을 쉽게 시작합니다.</p></article>
+          <article class="card"><h3>요구사항관리</h3><p>수집, 분석, 승인, 변경, 추적성 관리로 기획과 개발 사이의 혼선을 줄입니다.</p></article>
+          <article class="card"><h3>문서·기록관리</h3><p>작성, 검토, 승인, 배포, 폐기, 개정이력과 증적 관리를 표준화합니다.</p></article>
+          <article class="card"><h3>협력사관리</h3><p>선정, 평가, 계약 요구사항, 납품검사, 성과관리를 일관되게 운영합니다.</p></article>
+          <article class="card"><h3>교육·역량관리</h3><p>역량 기준, 교육계획, 이수관리, 평가, 자격부여를 한 흐름으로 묶습니다.</p></article>
+        </div>
+      </section>
+
+      <section class="section soft" id="how">
+        <div class="band">
+          <div>
+            <span class="eyebrow"><span class="dot"></span> 운영 방식</span>
+            <h2>처음 만드는 팀도, 이미 운영 중인 팀도 쉽게 붙습니다.</h2>
+            <p class="lead">
+              Processware는 표준을 어렵게 설명하지 않습니다. 팀이 쓰는 말과 산출물 이름에 맞춰
+              프로세스를 정리하고, 실행할 때마다 기록과 개선 포인트를 남깁니다.
+            </p>
+          </div>
+          <div class="steps">
+            <div class="step"><span class="step-num">1</span><div><h3>프로세스팩 선택</h3><p>일반, 산업, 직무 프로세스팩 중 필요한 구성을 선택합니다.</p></div></div>
+            <div class="step"><span class="step-num">2</span><div><h3>우리 조직에 맞게 조정</h3><p>역할, 승인 체계, 산출물 이름, 기존 문서를 반영합니다.</p></div></div>
+            <div class="step"><span class="step-num">3</span><div><h3>업무 실행과 증적 생성</h3><p>프로세스를 실행하면 기록, 승인, 체크리스트가 함께 쌓입니다.</p></div></div>
+            <div class="step"><span class="step-num">4</span><div><h3>점검과 개정까지 연결</h3><p>KPI, NCR, GAP 결과를 바탕으로 다음 개정안을 준비합니다.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="pricing">
+        <div class="section-head">
+          <h2>구독과 판매를 나눠서 선택하세요</h2>
+          <p>계속 업데이트가 필요한 팀은 구독형, 내부 자산으로 보유하려는 조직은 판매형이 맞습니다.</p>
+        </div>
+        <div class="pricing">
+          <article class="price-card highlight">
+            <span class="price-label">Subscription</span>
+            <h3>프로세스팩 구독</h3>
+            <p>표준 개정, 템플릿 개선, 신규 증적 양식을 계속 받아야 하는 팀에 적합합니다.</p>
+            <ul>
+              <li>월간 또는 연간 구독</li>
+              <li>표준·직무·산업 프로세스팩 선택</li>
+              <li>업데이트와 개정 알림 포함</li>
+              <li>Workspace 운영과 실행 기록 지원</li>
+              <li>팀 규모에 따른 좌석 또는 워크스페이스 과금</li>
+            </ul>
+            <a class="btn primary" href="mailto:hello@processware.ai">구독 문의</a>
+          </article>
+          <article class="price-card">
+            <span class="price-label">Purchase</span>
+            <h3>프로세스 자산 판매</h3>
+            <p>특정 표준이나 직무 체계를 내부 표준 자산으로 도입하려는 조직에 적합합니다.</p>
+            <ul>
+              <li>프로세스팩 단건 구매</li>
+              <li>고객 조직명과 역할 체계 반영</li>
+              <li>POL/PRO/WI/TMP/MAT 산출물 납품</li>
+              <li>초기 구축 컨설팅 선택 가능</li>
+              <li>유지보수와 업데이트는 별도 계약</li>
+            </ul>
+            <a class="btn secondary" href="mailto:hello@processware.ai">판매 문의</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section soft">
+        <div class="quote">
+          <p>“표준은 책장에 꽂아두는 문서가 아니라, 매일 실행되고 개선되는 운영 방식이어야 합니다.”</p>
+          <span>Processware는 그 운영 방식을 더 쉽게 시작하도록 돕습니다.</span>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="section-head">
+          <h2>자주 묻는 질문</h2>
+          <p>전문 용어는 줄이고, 도입 전에 궁금한 부분만 간단히 정리했습니다.</p>
+        </div>
+        <div class="faq">
+          <details><summary>인증 컨설팅 서비스인가요?</summary><p>인증 컨설팅을 대체한다기보다, 인증과 운영에 필요한 프로세스 자산과 증적 흐름을 만드는 플랫폼입니다. 컨설턴트와 함께 써도 좋고, 내부 표준팀이 직접 써도 됩니다.</p></details>
+          <details><summary>우리 회사 기존 문서를 반영할 수 있나요?</summary><p>가능합니다. 기존 규정, 템플릿, 산출물 목록을 입력으로 넣어 표준 프로세스팩과 맞춰 조정하는 방식이 기본입니다.</p></details>
+          <details><summary>구독과 판매 중 무엇을 선택해야 하나요?</summary><p>표준 개정과 지속 업데이트가 중요하면 구독형이 적합합니다. 한 번 구축해 내부 자산으로 보유하고 싶다면 판매형이 적합합니다.</p></details>
+          <details><summary>처음에는 어떤 팩부터 시작하면 좋나요?</summary><p>일반 조직은 프로젝트관리, 품질관리, 형상관리, 문서·기록관리부터 시작하는 것이 좋습니다. 산업 규제가 있는 조직은 Automotive, Medical Device, Defense Suite를 함께 검토하면 됩니다.</p></details>
+        </div>
+      </section>
+
+      <section class="cta">
+        <h2>표준 프로세스, 이제 처음부터 만들지 마세요.</h2>
+        <p>필요한 프로세스팩을 선택하고, 우리 조직에 맞게 조정한 뒤, 실행과 증적까지 한 흐름으로 운영하세요.</p>
+        <a class="btn secondary" href="mailto:hello@processware.ai">도입 상담 요청</a>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Processware. All rights reserved.</span>
+      <span>Standard process packs for practical teams.</span>
+    </footer>
+  </div>
+</body>
+</html>
